@@ -1,14 +1,17 @@
-import { SheetDemo } from "@/components/CreateVideoForm/CreateVideoForm";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { CreateVideoSheet } from "@/components/base/CreateVideoSheet/CreateVideoSheet";
+import { VideoList } from "@/components/base/VideoListComponent/VideoListComponent";
 
 export default function Home() {
+  // pre-fetch
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex border">
-        List of videos herer
+    <main className="flex  flex-col items-center justify-between border">
+      <div className="w-full max-w-5xl items-center justify-between  text-sm  py-4 p-2">
+        {/* <div className="flex flex-col items-center justify-between w-full border"> */}
+        <VideoList />
+
+        <CreateVideoSheet />
       </div>
-      <SheetDemo />
     </main>
   );
 }
