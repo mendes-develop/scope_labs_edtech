@@ -5,7 +5,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 import { getVideoCommentsQuery } from "@/lib/api/api";
-import { CommentSection } from "@/components/base/CommentSection/CommentSection";
+import { CommentSection } from "@/components/base/CommentSection";
 import { VideoFrame } from "@/components/base/VideoFrame";
 
 export default async function VideoDetailPage({ params }: { params: { videoId: string } }) {
