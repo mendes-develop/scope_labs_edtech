@@ -1,9 +1,8 @@
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import Image from "next/image"
 import Link from "next/link"
-import { useSearchParams } from 'next/navigation'
 import { OpenSheet } from "./AddVideo"
 import { Auth } from "./Auth/Auth"
+import { Suspense } from "react"
 
 export const NavBar = () => {
 
@@ -15,8 +14,10 @@ export const NavBar = () => {
     </div>
 
     <div className="flex items-center gap-4 justify-end">
-      <OpenSheet />
-      <Auth />
+      <Suspense fallback={<div>Loading...</div>}>
+        <OpenSheet />
+        <Auth />
+      </Suspense>
     </div>
   </nav>)
 }
