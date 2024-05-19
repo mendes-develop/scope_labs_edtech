@@ -1,16 +1,17 @@
 'use client'
-import { useGetVideosQuery } from "@/lib/api";
+import { useGetVideosQuery } from "@/lib/api/api";
 import Link from "next/link";
 
 interface VideoListProps {
   title: string;
   description: string;
   url: string;
+  id: string
 }
 
-const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url }) => {
+const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url, id }) => {
   return (
-    <Link href={`/video-detail/${"54KvaYl8FV6yiezMh5VU"}`} passHref>
+    <Link href={`/video-detail/${id}?title=${title}&description${description}&url=${url}`} passHref>
       <div className='bg-white rounded-lg shadow-md p-4'>
         <h2 className='text-xl font-bold mb-2'>{title}</h2>
         <p className='text-gray-700 mb-4'>{description}</p>
@@ -33,7 +34,8 @@ export const VideoList = () => {
           key={video.id}
           description={video.description}
           title={video.title}
-          url={video.url}
+          url={video.video_url}
+          id={video.id}
         />
       ))}
     </div>
