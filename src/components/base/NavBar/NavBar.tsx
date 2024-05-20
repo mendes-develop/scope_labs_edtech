@@ -3,8 +3,11 @@ import Link from "next/link"
 import { OpenSheet } from "./AddVideo"
 import { Auth } from "./Auth/Auth"
 import { Suspense } from "react"
+import { getCookieUserId } from "@/cookies/cookies"
 
-export const NavBar = () => {
+export const NavBar = async () => {
+
+  const cookiesId = await getCookieUserId()
 
   return (<nav className="flex justify-between items-center px-4 p-2 bg-white text-white border-b">
     <div className="flex items-center">
@@ -15,7 +18,7 @@ export const NavBar = () => {
 
     <div className="flex items-center gap-4 justify-end">
       <Suspense fallback={<div>Loading...</div>}>
-        <OpenSheet />
+        {cookiesId?.value ? <OpenSheet /> : null}
         <Auth />
       </Suspense>
     </div>

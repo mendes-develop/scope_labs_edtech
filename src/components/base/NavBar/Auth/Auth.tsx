@@ -1,5 +1,5 @@
 import { PersonIcon } from "@radix-ui/react-icons"
-import { createCookie, getCookieUserId } from "@/cookies/cookies"
+import { getCookieUserId } from "@/cookies/cookies"
 import { SignIn } from "./SignIn"
 import { SignOut } from "./SignOut"
 
@@ -8,7 +8,7 @@ export const Auth = async () => {
 
   return (
     <>
-      {cookie ? <SignOut>
+      {cookie?.value ? <SignOut>
         <div className="cursor-pointer">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

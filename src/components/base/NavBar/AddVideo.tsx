@@ -1,13 +1,16 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { PlusIcon } from "@radix-ui/react-icons"
 import { useSheetState } from '../CreateVideoSheet/hooks'
-export const OpenSheet = () => {
+export const OpenSheet = async () => {
   const { openSheet } = useSheetState()
+  const pathname = usePathname()
 
-  return (<div className="cursor-pointer" onClick={() => openSheet()}>
-    <PlusIcon className="stroke-primary" height={20} width={20} />
-  </div>)
+  return (
+    !pathname.includes('video-detail') ? <div className="cursor-pointer" onClick={() => openSheet()}>
+      <PlusIcon className="stroke-primary" height={20} width={20} />
+    </div> : null
+  )
 }
 
 

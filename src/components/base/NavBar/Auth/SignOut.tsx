@@ -8,10 +8,17 @@ import {
 } from "@/components/ui/popover"
 import { usePopoverState } from "./hooks"
 import { deleteCookie } from "@/cookies/cookies"
+import { QueryClient } from "@tanstack/react-query"
 export function SignOut({ children }: { children: React.ReactNode }) {
 
   const { closePopover } = usePopoverState()
+  const queryClient = new QueryClient();
 
+  const handleSubmit = async () => {
+    await deleteCookie()
+    closePopover()
+    queryClient.clear();
+  }
 
   return (
     <Popover>
@@ -27,11 +34,7 @@ export function SignOut({ children }: { children: React.ReactNode }) {
             </p>
           </div>
           <div className="grid gap-2">
-            <Button variant={"outline"} onClick={() => {
-              closePopover()
-              deleteCookie()
-              window.location.reload()
-            }}>
+            <Button variant={"outline"} onClick={handleSubmit}>
               Sign out
             </Button>
           </div>

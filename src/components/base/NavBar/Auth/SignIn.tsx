@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/popover"
 import { usePopoverState } from "./hooks"
 import { Button } from "@/components/ui/button"
-import { useCreateUserHookForm } from "./hookForm"
+import { UserInput, useCreateUserHookForm } from "./hookForm"
 
 import {
   Form,
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { createCookie } from "@/cookies/cookies"
+import { useGetVideosQuery } from "@/lib/api/api"
 
 export function SignIn({ children }: { children: React.ReactNode }) {
   const {
@@ -27,12 +28,15 @@ export function SignIn({ children }: { children: React.ReactNode }) {
     openPopover,
   } = usePopoverState()
 
-
   const form = useCreateUserHookForm()
 
-  console.log({
-    valid: form.formState.isValid,
-  })
+  const { refetch } = useGetVideosQuery()
+
+  const handleSubmit = async (data: UserInput) => {
+    await createCookie(data)
+    closePopover()
+    refetch()
+  }
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={(open) => !open && closePopover()}>
@@ -49,10 +53,7 @@ export function SignIn({ children }: { children: React.ReactNode }) {
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(data => {
-              createCookie(data)
-              window.location.reload()
-            })} className="space-y-2 grid grid-1">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2 grid grid-1">
               <FormField
                 control={form.control}
                 name="firstName"

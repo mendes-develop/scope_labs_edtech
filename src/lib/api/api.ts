@@ -1,51 +1,38 @@
 import { useQuery, QueryClient, useMutation, MutateOptions } from "@tanstack/react-query"
 import { createComment, createVideo, getVideoComment, getVideos } from "./axios"
+import { getCookieUserId } from "@/cookies/cookies"
+import { cookies } from "next/headers"
 
 const queryClient = new QueryClient()
 
-const videosQueryObj = {
-  queryKey: ['videos'],
-  queryFn: getVideos,
-} as const
-
-export const getVideosQuery = async () => {
-  return await queryClient.prefetchQuery(videosQueryObj)
+export const getVideosQuery = () => {
+  return queryClient.prefetchQuery({
+    queryKey: ['videos'],
+    queryFn: getVideos,
+  })
 }
 
-export const getVideoCommentsQuery = async (videoId: string) => {
-  return await queryClient.prefetchQuery({
+export const getVideoCommentsQuery = (videoId: string) => {
+  return queryClient.prefetchQuery({
     queryKey: [`video-comments`, videoId],
     queryFn: () => getVideoComment(videoId),
   })
 }
 
 export const useGetVideosQuery = () => {
-  return useQuery(videosQueryObj)
+  // const appCookies =  getCookieUserId()
+  return useQuery({
+    queryKey: ['videos'],
+    queryFn: getVideos,
+  })
 }
 
 export const useGetVideoCommentsQuery = (videoId: string) => {
   return useQuery({
     queryKey: ['videos-comments', videoId],
     queryFn: () => getVideoComment(videoId),
+    enabled: !!videoId,
   })
 }
-
-// export const useCreateVideoMutation = () => {
-//   return useMutation({
-//     mutationFn: createVideo,
-//     // onError,
-//     // onSuccess
-//   })
-// }
-
-// export const useCreateCommentMutation = () => {
-//   return useMutation({
-//     mutationFn: createComment,
-//     // onError,
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: ['/videos/comments'] })
-//     }
-//   })
-// }
 
 

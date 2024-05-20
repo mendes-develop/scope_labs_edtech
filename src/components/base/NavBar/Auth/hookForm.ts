@@ -7,10 +7,10 @@ const createUserId = z.object({
   lastName: z.string().min(3, { message: "Last name is required" }),
 })
 
-type Inputs = z.infer<typeof createUserId>;
+export type UserInput = z.infer<typeof createUserId>;
 
 export const useCreateUserHookForm = () => {
-  return useForm<Inputs>({
+  return useForm<UserInput>({
     resolver: zodResolver(createUserId),
     defaultValues: {
       firstName: "",
