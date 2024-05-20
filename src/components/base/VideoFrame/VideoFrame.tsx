@@ -1,23 +1,26 @@
+'use client'
 import React from 'react';
-// import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player'
+import { VideoListProps } from '../VideoListComponent';
 
-interface VideoFrameProps {
-  videoId: string;
-}
+export type VideoFrameProps = Omit<VideoListProps, "num_comments" | "id">
 
-export const VideoFrame: React.FC<VideoFrameProps> = ({ videoId }) => {
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      autoplay: 0,
-    },
-  };
+export const VideoFrame: React.FC<VideoFrameProps> = ({
+  title, description, url }) => {
 
-  // return <YouTube videoId={videoId} opts={opts} />;
   return (
-    <div className='w-full h-3/5 bg-black'>
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/HCOQmKTFzYY?si=Mdq2IYvBQ3wEr3AY" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-    </div>
+    <>
+      <div className='w-full h-3/6 px-2 py-2 rounded-sm'>
+        <ReactPlayer width={"100%"} height={"100%"} controls url={url} />
+      </div>
+      <div className='px-4'>
+        <h1 className="text-lg font-bold">
+          {title}
+        </h1>
+        <p className="text-sm">
+          {description}
+        </p>
+      </div>
+    </>
   )
 };

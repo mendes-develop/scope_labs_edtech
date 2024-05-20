@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/provider";
 import { NavBar } from "@/components/base/NavBar";
+import { getCookieUserId } from "@/cookies/cookies";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,19 +12,21 @@ export const metadata: Metadata = {
   description: "Watch Educational Videos",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookiesId = await getCookieUserId()
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>{
-          <>
-            <NavBar />
+          <div className="flex flex-col h-screen">
+            <NavBar userId={cookiesId?.value} />
             {children}
-          </>
+          </div>
         }
         </QueryProvider>
       </body>

@@ -1,26 +1,24 @@
 import { useRouter } from "next/router";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query'
 import { getVideoCommentsQuery } from "@/lib/api/api";
 import { CommentSection } from "@/components/base/CommentSection";
-import { VideoFrame } from "@/components/base/VideoFrame";
+import { VideoFrame, VideoFrameProps } from "@/components/base/VideoFrame";
+import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
+import { getQueryClient } from "@/provider";
+import { getVideoComment } from "@/lib/api/axios";
 
-export default async function VideoDetailPage({ params }: { params: { videoId: string } }) {
-  const videosQueryClient = await getVideoCommentsQuery(params.videoId)
-  console.log({ videosQueryClient })
+type VideoDetailPageProps = {
+  params: { videoId: string }
+  searchParams: VideoFrameProps
+}
+
+export default async function VideoDetailPage({ params, searchParams }: VideoDetailPageProps) {
 
   return (
-    // <HydrationBoundary state={dehydrate(videosQueryClient)}>
-    <div className='flex flex-col h-screen'>
-      {/* Video Player */}
-      <VideoFrame videoId={params.videoId} />
-
-      {/* Comments Section */}
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    <div className='flex flex-1 flex-col h-full'>
+      <VideoFrame {...searchParams} />
       <CommentSection />
-      {/* </HydrationBoundary> */}
     </div>
+    // </HydrationBoundary>
   );
 };

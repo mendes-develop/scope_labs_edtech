@@ -20,7 +20,7 @@ export const CommentForm = () => {
   const params = useParams<{ ["videoId"]: string }>()
 
   const queryClient = useQueryClient()
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: createComment,
     // onError,
     onSuccess: () => {
@@ -33,10 +33,10 @@ export const CommentForm = () => {
   })
 
   return (
-    <div className="grid w-full gap-1.5">
+    <div className="grid w-full gap-1">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(data => mutation.mutate({
+          onSubmit={form.handleSubmit(data => mutate({
             video_id: params.videoId,
             content: data.content
           }))}
@@ -46,7 +46,7 @@ export const CommentForm = () => {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your message</FormLabel>
+                <FormLabel>Comments</FormLabel>
                 <FormControl>
                   <Textarea
                     {...field}
@@ -58,12 +58,15 @@ export const CommentForm = () => {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            disabled={!form.formState.isValid}
-          >
-            Send message
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              className="w-48"
+              type="submit"
+              disabled={!form.formState.isValid || isPending}
+            >
+              Send Comment
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

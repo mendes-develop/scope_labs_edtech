@@ -8,16 +8,16 @@ import {
 } from "@/components/ui/popover"
 import { usePopoverState } from "./hooks"
 import { deleteCookie } from "@/cookies/cookies"
-import { QueryClient } from "@tanstack/react-query"
+import { getQueryClient } from "@/provider"
 export function SignOut({ children }: { children: React.ReactNode }) {
 
   const { closePopover } = usePopoverState()
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   const handleSubmit = async () => {
     await deleteCookie()
+    queryClient.invalidateQueries()
     closePopover()
-    queryClient.clear();
   }
 
   return (

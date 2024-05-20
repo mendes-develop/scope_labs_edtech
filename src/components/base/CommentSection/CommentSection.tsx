@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation'
 
 const CommentTile = ({ comment, user_id }: any) => {
   return (
-    <div className='flex flex-row gap-2 bg-white p-2 rounded-md mb-4 border'>
+    <div className='flex flex-row flex-1 gap-2 bg-white p-2 rounded-md mb-4 border'>
       <div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -17,7 +17,7 @@ const CommentTile = ({ comment, user_id }: any) => {
         />
       </div>
 
-      <div className={""}>
+      <div>
         <p className="text-sm">{user_id}</p>
         <p>{comment}</p>
       </div>
@@ -29,7 +29,7 @@ export const CommentSection = () => {
   const { data } = useGetVideoCommentsQuery(params["videoId"])
 
   return (
-    <div className='w-full p-4 overflow-y-auto flex flex-col gap-4'>
+    <div className='w-full flex-1 p-4 overflow-y-scroll flex flex-col gap-4'>
       <CommentForm />
       <div className="">
         {data?.data.comments.map((comment: any) =>

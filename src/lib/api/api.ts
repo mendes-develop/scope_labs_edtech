@@ -1,9 +1,8 @@
-import { useQuery, QueryClient, useMutation, MutateOptions } from "@tanstack/react-query"
-import { createComment, createVideo, getVideoComment, getVideos } from "./axios"
-import { getCookieUserId } from "@/cookies/cookies"
-import { cookies } from "next/headers"
+import { useQuery } from "@tanstack/react-query"
+import { getVideoComment, getVideos } from "./axios"
+import { getQueryClient } from "@/provider"
 
-const queryClient = new QueryClient()
+const queryClient = getQueryClient()
 
 export const getVideosQuery = () => {
   return queryClient.prefetchQuery({
@@ -12,18 +11,18 @@ export const getVideosQuery = () => {
   })
 }
 
-export const getVideoCommentsQuery = (videoId: string) => {
-  return queryClient.prefetchQuery({
+export const getVideoCommentsQuery = async (videoId: string) => {
+  return await queryClient.prefetchQuery({
     queryKey: [`video-comments`, videoId],
     queryFn: () => getVideoComment(videoId),
   })
 }
 
-export const useGetVideosQuery = () => {
-  // const appCookies =  getCookieUserId()
+export const useGetVideosQuery = (userId?: string | null) => {
   return useQuery({
     queryKey: ['videos'],
     queryFn: getVideos,
+    enabled: !!userId,
   })
 }
 

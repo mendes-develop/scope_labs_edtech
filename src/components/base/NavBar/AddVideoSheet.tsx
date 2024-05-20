@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation'
 import { PlusIcon } from "@radix-ui/react-icons"
 import { useSheetState } from '../CreateVideoSheet/hooks'
-export const OpenSheet = async () => {
+export const AddVideoSheet = () => {
   const { openSheet } = useSheetState()
   const pathname = usePathname()
 
