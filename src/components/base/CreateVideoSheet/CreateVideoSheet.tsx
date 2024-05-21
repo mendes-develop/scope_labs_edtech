@@ -17,23 +17,26 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
 import { useCreateVideoHookForm } from "./hookForm"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { createVideo } from "@/lib/api/axios"
 import { useSheetState } from "./hooks"
+import { QUERY_KEYS } from "@/lib/api/api"
+import { getQueryClient } from "@/provider"
 
 export function CreateVideoSheet() {
   const form = useCreateVideoHookForm()
 
   const { closeSheet, isSheetOpen } = useSheetState()
 
-  const queryClient = useQueryClient()
+  const queryClient = getQueryClient()
   const { mutate, } = useMutation({
     mutationFn: createVideo,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['videos'] })
+      queryClient.refetchQueries({
+        queryKey: [QUERY_KEYS.getVideosQuery]
+      })
 
       form.reset()
       closeSheet()
@@ -89,13 +92,13 @@ export function CreateVideoSheet() {
                   <FormItem>
                     <FormLabel>URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="http://localhost:3000/video-detail/54KvaYl8FV6yiezMh5VU" {...field} className="col-span-6" />
+                      <Input placeholder="https://youtu.be/ZvwUzcMvKiI?si=cmG5UC8kSk2wwsbT" {...field} className="col-span-6" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Submit Video</Button>
             </form>
           </Form>
         </div>

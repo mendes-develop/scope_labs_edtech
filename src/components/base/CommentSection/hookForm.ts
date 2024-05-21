@@ -10,12 +10,11 @@ const createMessage = z.object({
 
 type Inputs = z.infer<typeof createMessage>;
 const DEV = true;
-const TEST_DATA = { content: generateComment() }
 // send to another function api
 export const useCreateMessageHookForm = () => {
   return useForm<Inputs>({
     resolver: zodResolver(createMessage),
-    defaultValues: DEV ? TEST_DATA : {
+    defaultValues: {
       content: "",
     }
   })

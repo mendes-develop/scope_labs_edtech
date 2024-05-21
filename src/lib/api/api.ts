@@ -2,25 +2,30 @@ import { useQuery } from "@tanstack/react-query"
 import { getVideoComment, getVideos } from "./axios"
 import { getQueryClient } from "@/provider"
 
+export const QUERY_KEYS = {
+  getVideosQuery: "videos",
+  getVideoCommentsQuery: "video-comments"
+}
+
 const queryClient = getQueryClient()
 
 export const getVideosQuery = () => {
   return queryClient.prefetchQuery({
-    queryKey: ['videos'],
+    queryKey: [QUERY_KEYS.getVideosQuery],
     queryFn: getVideos,
   })
 }
 
 export const getVideoCommentsQuery = async (videoId: string) => {
   return await queryClient.prefetchQuery({
-    queryKey: [`video-comments`, videoId],
+    queryKey: [QUERY_KEYS.getVideoCommentsQuery, videoId],
     queryFn: () => getVideoComment(videoId),
   })
 }
 
 export const useGetVideosQuery = (userId?: string | null) => {
   return useQuery({
-    queryKey: ['videos'],
+    queryKey: [QUERY_KEYS.getVideosQuery],
     queryFn: getVideos,
     enabled: !!userId,
   })
@@ -28,7 +33,8 @@ export const useGetVideosQuery = (userId?: string | null) => {
 
 export const useGetVideoCommentsQuery = (videoId: string) => {
   return useQuery({
-    queryKey: ['videos-comments', videoId],
+    queryKey: [
+      QUERY_KEYS.getVideoCommentsQuery, videoId],
     queryFn: () => getVideoComment(videoId),
     enabled: !!videoId,
   })

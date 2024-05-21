@@ -61,7 +61,11 @@ export function SignIn({ children }: { children: React.ReactNode }) {
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John" {...field} className="col-span-6" />
+                      <Input
+                        placeholder="John"
+                        className="col-span-6"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

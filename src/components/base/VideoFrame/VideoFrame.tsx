@@ -11,7 +11,13 @@ export const VideoFrame: React.FC<VideoFrameProps> = ({
   return (
     <>
       <div className='w-full h-3/6 px-2 py-2 rounded-sm'>
-        <ReactPlayer width={"100%"} height={"100%"} controls url={url} />
+        <ReactPlayer
+          width={"100%"}
+          height={"100%"}
+          url={url}
+          playing
+          controls
+        />
       </div>
       <div className='px-4'>
         <h1 className="text-lg font-bold">

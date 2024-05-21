@@ -1,10 +1,7 @@
-import { useRouter } from "next/router";
-import { getVideoCommentsQuery } from "@/lib/api/api";
 import { CommentSection } from "@/components/base/CommentSection";
 import { VideoFrame, VideoFrameProps } from "@/components/base/VideoFrame";
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/provider";
-import { getVideoComment } from "@/lib/api/axios";
+import { redirect } from 'next/navigation'
+import { getCookieUserId } from "@/cookies/cookies";
 
 type VideoDetailPageProps = {
   params: { videoId: string }
@@ -12,13 +9,16 @@ type VideoDetailPageProps = {
 }
 
 export default async function VideoDetailPage({ params, searchParams }: VideoDetailPageProps) {
+  const userId = await getCookieUserId()
+
+  if (!userId?.value) {
+    redirect('/login')
+  }
 
   return (
-    // <HydrationBoundary state={dehydrate(queryClient)}>
     <div className='flex flex-1 flex-col h-full'>
       <VideoFrame {...searchParams} />
       <CommentSection />
     </div>
-    // </HydrationBoundary>
   );
 };

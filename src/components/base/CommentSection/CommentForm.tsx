@@ -9,26 +9,30 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { createComment } from "@/lib/api/axios"
 import { useParams } from "next/navigation"
+import { QUERY_KEYS } from "@/lib/api/api"
+import { getQueryClient } from "@/provider"
 
 export const CommentForm = () => {
   const form = useCreateMessageHookForm()
 
-  // get id from params
   const params = useParams<{ ["videoId"]: string }>()
 
-  const queryClient = useQueryClient()
+  const queryClient = getQueryClient()
   const { mutate, isPending } = useMutation({
     mutationFn: createComment,
-    // onError,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey:
-          ['videos-comments', params.videoId] as const,
-      })
+    // onError: handle error
+    onSuccess: async () => {
       form.reset()
+      const refetchParams = {
+        queryKey: [QUERY_KEYS.getVideoCommentsQuery,
+        params.videoId]
+      } as const;
+
+      await queryClient.invalidateQueries(refetchParams)
+      await queryClient.refetchQueries(refetchParams)
     }
   })
 
@@ -50,7 +54,7 @@ export const CommentForm = () => {
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder="Type your message here."
+                    placeholder="Type your comment here"
                     id="message"
                   />
                 </FormControl>

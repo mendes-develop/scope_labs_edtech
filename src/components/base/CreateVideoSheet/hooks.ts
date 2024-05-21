@@ -7,7 +7,6 @@ export const useSheetState = () => {
     params.delete('sheet-open')
 
     window.history.pushState(null, '', `?${params.toString()}`)
-    console.log("closing sheet")
   }
 
   function openSheet() {
@@ -15,7 +14,6 @@ export const useSheetState = () => {
     params.set('sheet-open', 'true')
 
     window.history.pushState(null, '', `?${params.toString()}`)
-    console.log("opening sheet")
   }
 
   return {

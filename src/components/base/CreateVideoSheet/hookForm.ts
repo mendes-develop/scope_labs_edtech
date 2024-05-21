@@ -11,20 +11,10 @@ const createVideoSchema = z.object({
 
 type Inputs = z.infer<typeof createVideoSchema>;
 
-const DEV = true;
-
-const TEST_DATA = {
-  title: "test",
-  description: "test",
-  video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-}
-
-export const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
-// send to another function api
 export const useCreateVideoHookForm = () => {
   return useForm<Inputs>({
     resolver: zodResolver(createVideoSchema),
-    defaultValues: DEV ? TEST_DATA : {
+    defaultValues: {
       title: "",
       description: "",
       video_url: ""

@@ -1,7 +1,6 @@
 'use client'
 import { useGetVideosQuery } from "@/lib/api/api";
-import { trimString, parseCookieString } from "@/utils";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { trimString } from "@/utils";
 import Link from "next/link";
 import ReactPlayer from "react-player";
 import { usePopoverState } from "../NavBar/Auth/hooks";
@@ -18,14 +17,11 @@ export type VideoListProps = {
 
 const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url, id, num_comments }) => {
   return (
-    <Link href={`/video-detail/${id}?title=${title}&description=${description}&url=${url}`} passHref>
-      <div className='bg-white rounded-lg p-2 border flex flex-col gap-1 h-48'>
+    <Link data-testid={`video-list-${id}`} href={`/video-detail/${id}?title=${title}&description=${description}&url=${url}`} passHref>
+      <div className='bg-white rounded-lg p-2 border flex flex-col gap-1 h-48 overflow-hidden'>
         <ReactPlayer light url={url} width={"100%"} height={"100%"} style={{ borderRadius: '10px' }} />
         <p className='font-bold'>{trimString(title, 45)}</p>
         <p className='text-gray-700'>{trimString(description, 60)}</p>
-        <p className='text-xs py-1'>
-          {`${num_comments} comment${num_comments > 1 ? "s" : ""}`}
-        </p>
       </div>
     </Link>
   );
@@ -38,7 +34,7 @@ export const VideoList = ({ userId }: {
 
   return (
     <>{!userId ? <SigninText />
-      : !data?.data.videos.length && !isLoading ?
+      : !data?.data?.videos.length && !isLoading ?
         <AddVideoText />
         :
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
@@ -65,6 +61,7 @@ const AddVideoText = () => {
       <Button
         variant={"outline"}
         onClick={openSheet}
+        className="text-lg text-primary"
       >
         {"Press '+' to start adding videos"}
       </Button>
@@ -80,7 +77,7 @@ const SigninText = () => {
       <Button
         variant={"outline"}
         onClick={openPopover}
-        className="text-lg text-primary  content-end">
+        className="text-lg text-primary">
         Sign in to start creating videos
       </Button>
     </div>

@@ -9,7 +9,7 @@ export const Auth = async () => {
   return (
     <>
       {cookie?.value ? <SignOut>
-        <div className="cursor-pointer">
+        <button className="cursor-pointer" role="button" aria-label="Profile">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`https://api.dicebear.com/8.x/initials/svg?radius=50&seed=${cookie.value}`}
@@ -17,14 +17,14 @@ export const Auth = async () => {
             width={20}
             height={20}
           />
-        </div>
+        </button>
       </SignOut>
         :
         (
           <SignIn>
-            <div className="cursor-pointer">
+            <button role="button" aria-label="Sign in">
               <PersonIcon className="stroke-primary" height={20} width={20} />
-            </div>
+            </button>
           </SignIn>
         )
       }
