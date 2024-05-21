@@ -18,7 +18,7 @@ export type VideoListProps = {
 
 const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url, id, num_comments }) => {
   return (
-    <Link href={`/video-detail/${id}?title=${title}&description=${description}&url=${url}`} passHref>
+    <Link data-testid={`video-list-${id}`} href={`/video-detail/${id}?title=${title}&description=${description}&url=${url}`} passHref>
       <div className='bg-white rounded-lg p-2 border flex flex-col gap-1 h-48'>
         <ReactPlayer light url={url} width={"100%"} height={"100%"} style={{ borderRadius: '10px' }} />
         <p className='font-bold'>{trimString(title, 45)}</p>

@@ -95,7 +95,7 @@ export function CreateVideoSheet() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Submit Video</Button>
             </form>
           </Form>
         </div>

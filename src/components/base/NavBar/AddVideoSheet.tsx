@@ -7,9 +7,14 @@ export const AddVideoSheet = () => {
   const pathname = usePathname()
 
   return (
-    !pathname.includes('video-detail') ? <div className="cursor-pointer" onClick={() => openSheet()}>
-      <PlusIcon className="stroke-primary" height={20} width={20} />
-    </div> : null
+    !pathname.includes('video-detail') ? (
+      <div
+        data-testid={"PlusIcon"}
+        className="cursor-pointer"
+        onClick={openSheet}>
+        <PlusIcon className="stroke-primary" height={20} width={20} />
+      </div>
+    ) : null
   )
 }
 

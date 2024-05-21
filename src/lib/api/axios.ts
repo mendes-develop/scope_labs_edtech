@@ -24,7 +24,7 @@ export const getVideos = async () => {
   return axiosInstance.get(`/videos?user_id=${user_id?.value}`)
 }
 export const getVideoComment = async (videoId: string) => {
-  return await axiosInstance.get(`/videos/comments/?video_id=${videoId}`)
+  return await axiosInstance.get(`/videos/comments?video_id=${videoId}`)
 }
 
 export const createVideo = async (data: CreateVideoInput) => {

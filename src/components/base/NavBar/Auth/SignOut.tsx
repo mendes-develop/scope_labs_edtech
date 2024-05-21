@@ -37,7 +37,9 @@ export function SignOut({ children }: { children: React.ReactNode }) {
             </p>
           </div>
           <div className="grid gap-2">
-            <Button variant={"outline"} onClick={handleSubmit}>
+            <Button
+              variant={"outline"}
+              onClick={handleSubmit}>
               Sign out
             </Button>
           </div>
