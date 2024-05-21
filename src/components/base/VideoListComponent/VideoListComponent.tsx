@@ -38,7 +38,7 @@ export const VideoList = ({ userId }: {
 
   return (
     <>{!userId ? <SigninText />
-      : !data?.data.videos.length && !isLoading ?
+      : !data?.data?.videos.length && !isLoading ?
         <AddVideoText />
         :
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
@@ -65,6 +65,7 @@ const AddVideoText = () => {
       <Button
         variant={"outline"}
         onClick={openSheet}
+        className="text-lg text-primary"
       >
         {"Press '+' to start adding videos"}
       </Button>
@@ -80,7 +81,7 @@ const SigninText = () => {
       <Button
         variant={"outline"}
         onClick={openPopover}
-        className="text-lg text-primary  content-end">
+        className="text-lg text-primary">
         Sign in to start creating videos
       </Button>
     </div>

@@ -89,7 +89,7 @@ export function CreateVideoSheet() {
                   <FormItem>
                     <FormLabel>URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="http://localhost:3000/video-detail/54KvaYl8FV6yiezMh5VU" {...field} className="col-span-6" />
+                      <Input placeholder="https://youtu.be/ZvwUzcMvKiI?si=cmG5UC8kSk2wwsbT" {...field} className="col-span-6" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

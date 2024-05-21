@@ -16,13 +16,12 @@ import { useParams } from "next/navigation"
 export const CommentForm = () => {
   const form = useCreateMessageHookForm()
 
-  // get id from params
   const params = useParams<{ ["videoId"]: string }>()
 
   const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({
     mutationFn: createComment,
-    // onError,
+    // onError: handle error
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey:
@@ -50,7 +49,7 @@ export const CommentForm = () => {
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder="Type your message here."
+                    placeholder="Type your comment here"
                     id="message"
                   />
                 </FormControl>

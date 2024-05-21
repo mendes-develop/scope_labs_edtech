@@ -1,5 +1,4 @@
 'use client'
-// import { createCookie, deleteCookie, getCookieUserId } from "@/cookies/cookies"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -9,15 +8,19 @@ import {
 import { usePopoverState } from "./hooks"
 import { deleteCookie } from "@/cookies/cookies"
 import { getQueryClient } from "@/provider"
+import { usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 export function SignOut({ children }: { children: React.ReactNode }) {
 
   const { closePopover } = usePopoverState()
   const queryClient = getQueryClient();
+  const router = useRouter()
 
   const handleSubmit = async () => {
     await deleteCookie()
     queryClient.invalidateQueries()
     closePopover()
+    router.push("/")
   }
 
   return (

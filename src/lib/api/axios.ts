@@ -19,6 +19,8 @@ const axiosInstance = axios.create({
 
 export const getVideos = async () => {
   const user_id = await getCookieUserId()
+  if (!user_id?.value) return null
+
   return axiosInstance.get(`/videos?user_id=${user_id?.value}`)
 }
 export const getVideoComment = async (videoId: string) => {
@@ -27,15 +29,15 @@ export const getVideoComment = async (videoId: string) => {
 
 export const createVideo = async (data: CreateVideoInput) => {
   const user_id = await getCookieUserId()
-  return await axiosInstance.post(
+  axiosInstance.post(
     `/videos`,
     { ...data, user_id: user_id?.value },
   )
 }
 
-export const createComment = (data: CreateCommentInput) => {
+export const createComment = async (data: CreateCommentInput) => {
   const user_id = randomNameSlug()
-  return axiosInstance.post(
+  axiosInstance.post(
     `/videos/comments`,
     { ...data, user_id },
   )
