@@ -10,16 +10,18 @@ export const VideoFrame: React.FC<VideoFrameProps> = ({
 
   return (
     <>
-      <div className='w-full h-3/6 px-2 py-2 rounded-sm'>
+      <div className='w-full h-3/6 px-2 py-2 rounded-sm bg-black'>
         <ReactPlayer
           width={"100%"}
           height={"100%"}
           url={url}
           playing
           controls
+          //  video frame has its own state
+          fallback={<div className='text-white'>Hello WOrld</div>}
         />
       </div>
-      <div className='px-4'>
+      <div className='p-4 pt-6 bottom-b-2 border'>
         <h1 className="text-lg font-bold">
           {title}
         </h1>

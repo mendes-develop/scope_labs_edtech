@@ -5,7 +5,7 @@ import { getQueryClient } from "@/provider"
 export const QUERY_KEYS = {
   getVideosQuery: "videos",
   getVideoCommentsQuery: "video-comments"
-}
+} as const;
 
 const queryClient = getQueryClient()
 

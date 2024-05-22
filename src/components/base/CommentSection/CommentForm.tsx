@@ -14,11 +14,13 @@ import { createComment } from "@/lib/api/axios"
 import { useParams } from "next/navigation"
 import { QUERY_KEYS } from "@/lib/api/api"
 import { getQueryClient } from "@/provider"
+import { useToast } from "@/components/ui/use-toast"
 
 export const CommentForm = () => {
   const form = useCreateMessageHookForm()
 
   const params = useParams<{ ["videoId"]: string }>()
+  const { toast } = useToast()
 
   const queryClient = getQueryClient()
   const { mutate, isPending } = useMutation({
@@ -33,6 +35,8 @@ export const CommentForm = () => {
 
       await queryClient.invalidateQueries(refetchParams)
       await queryClient.refetchQueries(refetchParams)
+
+      toast({ title: "Created successfully." })
     }
   })
 

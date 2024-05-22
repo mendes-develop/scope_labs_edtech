@@ -24,25 +24,27 @@ import { createVideo } from "@/lib/api/axios"
 import { useSheetState } from "./hooks"
 import { QUERY_KEYS } from "@/lib/api/api"
 import { getQueryClient } from "@/provider"
+import { toast, useToast } from "@/components/ui/use-toast"
 
 export function CreateVideoSheet() {
   const form = useCreateVideoHookForm()
 
   const { closeSheet, isSheetOpen } = useSheetState()
+  const { toast } = useToast()
 
   const queryClient = getQueryClient()
   const { mutate, } = useMutation({
     mutationFn: createVideo,
-    onSuccess: () => {
-      queryClient.refetchQueries({
-        queryKey: [QUERY_KEYS.getVideosQuery]
-      })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getVideosQuery] })
+      await queryClient.refetchQueries({ queryKey: [QUERY_KEYS.getVideosQuery] })
 
       form.reset()
       closeSheet()
+
+      toast({ title: "Created successfully." })
     }
   })
-
 
   return (
     <Sheet

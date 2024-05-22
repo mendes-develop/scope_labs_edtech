@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 import { usePopoverState } from "../NavBar/Auth/hooks";
 import { useSheetState } from "../CreateVideoSheet/hooks";
 import { Button } from "@/components/ui/button";
+import { SkeletonList } from "./LoadingState";
 
 export type VideoListProps = {
   title: string;
@@ -15,7 +16,7 @@ export type VideoListProps = {
   num_comments: number;
 }
 
-const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url, id, num_comments }) => {
+const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url, id }) => {
   return (
     <Link data-testid={`video-list-${id}`} href={`/video-detail/${id}?title=${title}&description=${description}&url=${url}`} passHref>
       <div className='bg-white rounded-lg p-2 border flex flex-col gap-1 h-48 overflow-hidden'>
@@ -33,22 +34,24 @@ export const VideoList = ({ userId }: {
   const { data, isLoading } = useGetVideosQuery(userId);
 
   return (
-    <>{!userId ? <SigninText />
-      : !data?.data?.videos.length && !isLoading ?
-        <AddVideoText />
-        :
-        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
-          {data?.data.videos.map((video: any) => (
-            <VideoListComponent
-              key={video.id}
-              description={video.description}
-              title={video.title}
-              url={video.video_url}
-              id={video.id}
-              num_comments={video.num_comments}
-            />
-          ))}
-        </div>
+    <>{
+      isLoading ? <SkeletonList /> :
+        !userId ? <SigninText />
+          : !data?.data?.videos.length && !isLoading ?
+            <AddVideoText />
+            :
+            <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
+              {data?.data.videos.map((video: any) => (
+                <VideoListComponent
+                  key={video.id}
+                  description={video.description}
+                  title={video.title}
+                  url={video.video_url}
+                  id={video.id}
+                  num_comments={video.num_comments}
+                />
+              ))}
+            </div>
     }</>
   );
 };

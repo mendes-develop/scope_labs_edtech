@@ -4,6 +4,7 @@ import "./globals.css";
 import { QueryProvider } from "@/provider";
 import { NavBar } from "@/components/base/NavBar";
 import { getCookieUserId } from "@/cookies/cookies";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
             {children}
           </div>
         }
+          <Toaster />
         </QueryProvider>
       </body>
     </html>
