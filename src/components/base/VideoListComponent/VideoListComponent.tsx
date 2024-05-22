@@ -7,6 +7,8 @@ import { usePopoverState } from "../NavBar/Auth/hooks";
 import { useSheetState } from "../CreateVideoSheet/hooks";
 import { Button } from "@/components/ui/button";
 import { SkeletonList } from "./LoadingState";
+import { error } from "console";
+import { ErrorAlert } from "./ErrorState";
 
 export type VideoListProps = {
   title: string;
@@ -31,27 +33,28 @@ const VideoListComponent: React.FC<VideoListProps> = ({ title, description, url,
 export const VideoList = ({ userId }: {
   userId?: string;
 }) => {
-  const { data, isLoading } = useGetVideosQuery(userId);
+  const { data, isLoading, error } = useGetVideosQuery(userId);
 
   return (
     <>{
-      isLoading ? <SkeletonList /> :
-        !userId ? <SigninText />
-          : !data?.data?.videos.length && !isLoading ?
-            <AddVideoText />
-            :
-            <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
-              {data?.data.videos.map((video: any) => (
-                <VideoListComponent
-                  key={video.id}
-                  description={video.description}
-                  title={video.title}
-                  url={video.video_url}
-                  id={video.id}
-                  num_comments={video.num_comments}
-                />
-              ))}
-            </div>
+      error ? <ErrorAlert /> :
+        isLoading ? <SkeletonList /> :
+          !userId ? <SigninText />
+            : !data?.data?.videos.length && !isLoading ?
+              <AddVideoText />
+              :
+              <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
+                {data?.data.videos.map((video: any) => (
+                  <VideoListComponent
+                    key={video.id}
+                    description={video.description}
+                    title={video.title}
+                    url={video.video_url}
+                    id={video.id}
+                    num_comments={video.num_comments}
+                  />
+                ))}
+              </div>
     }</>
   );
 };
